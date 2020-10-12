@@ -1,0 +1,135 @@
+CREATE TABLE `department` (
+  `id` bigint NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `address` (
+  `id` bigint NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `address1` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `district` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `zip_code` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `employee` (
+  `id` bigint NOT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `created_date` datetime(6) DEFAULT NULL,
+  `email_id` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `salary` varchar(255) DEFAULT NULL,
+  `mobile_number` decimal(19,2) DEFAULT NULL,
+  `updated_by` varchar(255) DEFAULT NULL,
+  `updated_date` datetime(6) DEFAULT NULL,
+  `address_id` bigint DEFAULT NULL,
+  `department_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_address_id` (`address_id`),
+  KEY `fk_department_id` (`department_id`),
+  CONSTRAINT `fk_department_id` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`),
+  CONSTRAINT `fk_address_id` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `roles` (
+  `id` bigint NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `employee_roles` (
+  `employee_id` bigint NOT NULL,
+  `roles_id` bigint NOT NULL,
+  KEY `fk_role_id` (`roles_id`),
+  KEY `fk_employee_id` (`employee_id`),
+  CONSTRAINT `fk_employee_id` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`),
+  CONSTRAINT `fk_role_id` FOREIGN KEY (`roles_id`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `knowledge_repo`.`roles` (`id`, `name`) VALUES ('1', 'ADMIN');
+INSERT INTO `knowledge_repo`.`roles` (`id`, `name`) VALUES ('2', 'EDITOR');
+INSERT INTO `knowledge_repo`.`roles` (`id`, `name`) VALUES ('3', 'MODERATOR');
+INSERT INTO `knowledge_repo`.`roles` (`id`, `name`) VALUES ('4', 'USER');
+    
+INSERT INTO `knowledge_repo`.`department` (`id`, `name`) VALUES ('1', 'IT');
+INSERT INTO `knowledge_repo`.`department` (`id`, `name`) VALUES ('2', 'HR');
+INSERT INTO `knowledge_repo`.`department` (`id`, `name`) VALUES ('3', 'STORAGE');
+INSERT INTO `knowledge_repo`.`department` (`id`, `name`) VALUES ('4', 'FINANCE');
+INSERT INTO `knowledge_repo`.`department` (`id`, `name`) VALUES ('5', 'OOPS');
+INSERT INTO `knowledge_repo`.`department` (`id`, `name`) VALUES ('6', 'RECRUITMENT');
+
+set foreign_key_checks = 0;
+
+INSERT INTO `knowledge_repo`.`address` (`id`, `address`, `city`, `country`, `district`, `state`, `zip_code`) VALUES ('1', 'test address', 'test city', 'test country', 'test district', 'ara', '434343');
+INSERT INTO `knowledge_repo`.`employee` (`id`, `created_by`, `email_id`, `name`, `salary`, `mobile_number`, `updated_by`, `address_id`, `department_id`) VALUES ('1', 'sumit', 'sumitsingh', 'sumit', '4444', '3543534534', 'sumit', '1', '1');
+
+/*
+//  Add Employee :-
+	{
+        "employeeName": "Harshit",
+        "employeeSalary": "5555",
+        "address": {
+            "address": "test address",
+            "address1": "test address 1",
+            "district": "districtName",
+            "city": "cityName",
+            "state": "stateName",
+            "country": "countryName",
+            "zipCode": 756756
+        },
+        "departmentId":2,
+        "roles": [1,2],
+        "mobileNumber": 2343234323,
+        "emailId": "testmail@gmail.com",
+        "userName":"currentUserName"
+	} 
+*/
+
+/* Adding composite key(Unique key on multiple columns) */
+// With the help of this we are restricting the user to not save the data having same mobile number and employee name;
+ALTER TABLE `knowledge_repo`.`employee`
+ADD UNIQUE `unique_employee_name_mobile_number`(`name`, `mobile_number`);
+
+/*-- Creating history tables and triggers on bin table --*/
+
+CREATE TABLE `employee_h` (
+  `action_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `history_Id` BIGINT AUTO_INCREMENT,
+  `id` bigint NOT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `created_date` datetime(6) DEFAULT NULL,
+  `email_id` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `salary` varchar(255) DEFAULT NULL,
+  `mobile_number` decimal(19,2) DEFAULT NULL,
+  `updated_by` varchar(255) DEFAULT NULL,
+  `updated_date` datetime(6) DEFAULT NULL,
+  `address_id` bigint DEFAULT NULL,
+  `department_id` bigint DEFAULT NULL,
+   PRIMARY KEY (`history_Id`),
+  KEY `fk_address_id` (`address_id`),
+  KEY `fk_department_id` (`department_id`),
+  CONSTRAINT `fk_department_id` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`),
+  CONSTRAINT `fk_address_id` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`),
+  INDEX (`action_time`)
+)  ENGINE=INNODB;
+
+
+DROP TRIGGER
+IF EXISTS `tr_employee_ai`;
+CREATE
+	TRIGGER  `tr_employee_ai`
+ AFTER INSERT ON `employee` FOR EACH ROW
+    INSERT INTO `employee_h` (`id` , `email_id` , `name` , `salary` , `created_by` , `created_date` , `mobile_number` , `address_id` , `updated_date` , `department_id` , `updated_by`)
+     VALUES (NEW.id , NEW.email_id , NEW.name , NEW.salary , NEW.created_by , NEW.created_date , NEW.mobile_number , NEW.address_id , NEW.updated_date , NEW.department_id , NEW.updated_by);
+    DROP TRIGGER
+    IF EXISTS `tr_employee_au`;
+CREATE
+	TRIGGER  `tr_employee_au`
+ AFTER UPDATE ON `employee` FOR EACH ROW
+    INSERT INTO `employee_h` (`id` , `email_id` , `name` , `salary` , `created_by` , `created_date` , `mobile_number` , `address_id` , `updated_date` , `department_id` , `updated_by`)
+     VALUES (NEW.id , NEW.email_id , NEW.name , NEW.salary , NEW.created_by , NEW.created_date , NEW.mobile_number , NEW.address_id , NEW.updated_date , NEW.department_id , NEW.updated_by);
