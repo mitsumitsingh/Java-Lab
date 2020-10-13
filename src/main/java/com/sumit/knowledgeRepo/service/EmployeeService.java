@@ -12,8 +12,14 @@ public interface EmployeeService {
 
 	List<Employee> getAllEmployees();
 
+	Employee getEmployeeById(Long employeeId);
+
 	Employee saveEmployee(EmployeePojo employee);
 
 	Employee updateEmployee(Long employeeId, Employee employeeDetails);
+
+	Employee deleteEmployee(Long employeeId);
+
+	List<Employee> getAllEmployeesByPaging(int pageNumber, int pageSize);
 
 }

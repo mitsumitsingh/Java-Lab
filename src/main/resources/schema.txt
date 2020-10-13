@@ -94,7 +94,7 @@ INSERT INTO `knowledge_repo`.`employee` (`id`, `created_by`, `email_id`, `name`,
 ALTER TABLE `knowledge_repo`.`employee`
 ADD UNIQUE `unique_employee_name_mobile_number`(`name`, `mobile_number`);
 
-/*-- Creating history tables and triggers on bin table --*/
+/*-- Creating history tables and triggers on employee table --*/
 
 CREATE TABLE `employee_h` (
   `action_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -111,11 +111,7 @@ CREATE TABLE `employee_h` (
   `address_id` bigint DEFAULT NULL,
   `department_id` bigint DEFAULT NULL,
    PRIMARY KEY (`history_Id`),
-  KEY `fk_address_id` (`address_id`),
-  KEY `fk_department_id` (`department_id`),
-  CONSTRAINT `fk_department_id` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`),
-  CONSTRAINT `fk_address_id` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`),
-  INDEX (`action_time`)
+   INDEX (`action_time`)
 )  ENGINE=INNODB;
 
 
@@ -133,3 +129,4 @@ CREATE
  AFTER UPDATE ON `employee` FOR EACH ROW
     INSERT INTO `employee_h` (`id` , `email_id` , `name` , `salary` , `created_by` , `created_date` , `mobile_number` , `address_id` , `updated_date` , `department_id` , `updated_by`)
      VALUES (NEW.id , NEW.email_id , NEW.name , NEW.salary , NEW.created_by , NEW.created_date , NEW.mobile_number , NEW.address_id , NEW.updated_date , NEW.department_id , NEW.updated_by);
+
