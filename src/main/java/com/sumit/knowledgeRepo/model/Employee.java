@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -38,11 +39,11 @@ public class Employee {
 	@JoinColumn(name="address_id")
 	private Address address;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="department_id")
 	private Department department;
 	
-    @ManyToMany(targetEntity=Roles.class)  
+    @ManyToMany(targetEntity=Roles.class, fetch = FetchType.EAGER)  
 	@JoinColumn(name="roles")
 	private List<Roles> roles;
 	
