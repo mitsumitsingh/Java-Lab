@@ -7,22 +7,22 @@ import org.springframework.http.HttpStatus;
 public class ExceptionResponse {
 	private Date timestamp;
     private String message;
-    private String details;
+    private String url;
     private HttpStatus status;
 
-    public ExceptionResponse(Date timestamp, String message, String details, HttpStatus status) {
+    public ExceptionResponse(Date timestamp, String message, String url, HttpStatus status) {
 	    super();
 	    this.timestamp = timestamp;
 	    this.message = message;
-	    this.details = details;
+	    this.url = url;
 	    this.status = status;
     }
     
-    public ExceptionResponse(Date timestamp, String message, String details) {
+    public ExceptionResponse(Date timestamp, String message, String url) {
 	    super();
 	    this.timestamp = timestamp;
 	    this.message = message;
-	    this.details = details;
+	    this.url = url;
     }
 
 	public Date getTimestamp() {
@@ -33,8 +33,8 @@ public class ExceptionResponse {
 		return message;
 	}
 
-	public String getDetails() {
-		return details;
+	public String getUrl() {
+		return url;
 	}
 
 	public HttpStatus getStatus() {

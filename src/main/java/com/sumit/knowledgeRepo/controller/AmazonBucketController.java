@@ -1,9 +1,7 @@
 package com.sumit.knowledgeRepo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,9 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sumit.knowledgeRepo.service.AmazonBucketService;
 
 @RestController
-@CrossOrigin(origins = "*", allowCredentials = "true", exposedHeaders = "true", allowedHeaders = "*")
-@RequestMapping("/rest")
-public class AmazonBucketController {
+public class AmazonBucketController extends RestCtrl{
 	
 	@Autowired
 	private AmazonBucketService amazonBucketService;
