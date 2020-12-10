@@ -1,86 +1,152 @@
 package com.sumit.knowledgeRepo.pojo;
 
-import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 import com.sumit.knowledgeRepo.model.Address;
+import com.sumit.knowledgeRepo.model.Department;
+import com.sumit.knowledgeRepo.model.Employee;
+import com.sumit.knowledgeRepo.model.Roles;
 
 public class EmployeePojo {
 
 	private Long id;
 	private String employeeName;	
-	private String employeeSalary;
+	private Double employeeSalary;
 	private Address address;
-	private int departmentId;
-	private List<Long> roles;	
-	private BigInteger mobileNumber;	
+	private Department department;
+	private List<Roles> roles;	
+	private Long mobileNumber;	
 	private String emailId;
-	private String userName;
+	private String createdBy;
+	private String updatedBy;
+	private Date createdDate;
+	private Date updatedDate;
 	
 	public EmployeePojo() {
 		super();
 	}
 
+	
+	public EmployeePojo(Employee employee) {
+		super();
+		this.id = employee.getId();
+		this.employeeName = employee.getEmployeeName();
+		this.employeeSalary = employee.getEmployeeSalary();
+		this.address = employee.getAddress();
+		this.department = employee.getDepartment();
+		this.roles = employee.getRoles();
+		this.mobileNumber = employee.getMobileNumber();
+		this.emailId = employee.getEmailId();
+		this.createdBy = employee.getCreatedBy();
+		this.updatedBy = employee.getUpdatedBy();
+		this.createdDate = employee.getCreatedDate();
+		this.updatedDate = employee.getUpdatedDate();
+	}
+
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getEmployeeName() {
 		return employeeName;
 	}
+
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
 	}
-	public String getEmployeeSalary() {
+
+	public Double getEmployeeSalary() {
 		return employeeSalary;
 	}
-	public void setEmployeeSalary(String employeeSalary) {
+
+	public void setEmployeeSalary(Double employeeSalary) {
 		this.employeeSalary = employeeSalary;
 	}
+
 	public Address getAddress() {
 		return address;
 	}
+
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-	public int getDepartmentId() {
-		return departmentId;
+
+	public Department getDepartment() {
+		return department;
 	}
-	public void setDepartmentId(int departmentId) {
-		this.departmentId = departmentId;
+
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
-	public List<Long> getRoles() {
+
+	public List<Roles> getRoles() {
 		return roles;
 	}
-	public void setRoles(List<Long> roles) {
+
+	public void setRoles(List<Roles> roles) {
 		this.roles = roles;
 	}
-	public BigInteger getMobileNumber() {
+
+	public Long getMobileNumber() {
 		return mobileNumber;
 	}
-	public void setMobileNumber(BigInteger mobileNumber) {
+
+	public void setMobileNumber(Long mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
+
 	public String getEmailId() {
 		return emailId;
 	}
+
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
-	public String getUserName() {
-		return userName;
+
+	public String getCreatedBy() {
+		return createdBy;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
 	}
 
 	@Override
 	public String toString() {
 		return "EmployeePojo [id=" + id + ", employeeName=" + employeeName + ", employeeSalary=" + employeeSalary
-				+ ", address=" + address + ", departmentId=" + departmentId + ", roles=" + roles + ", mobileNumber="
-				+ mobileNumber + ", emailId=" + emailId + ", userName=" + userName + "]";
+				+ ", address=" + address + ", department=" + department + ", roles=" + roles + ", mobileNumber="
+				+ mobileNumber + ", emailId=" + emailId + ", createdBy=" + createdBy + ", updatedBy=" + updatedBy
+				+ ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + "]";
 	}
 	
 }

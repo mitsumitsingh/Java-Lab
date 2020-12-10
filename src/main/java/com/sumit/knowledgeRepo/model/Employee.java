@@ -1,6 +1,5 @@
 package com.sumit.knowledgeRepo.model;
 
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +19,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.sumit.knowledgeRepo.pojo.EmployeePojo;
+import com.sumit.knowledgeRepo.requestObject.EmployeeRequestObj;
 
 @Entity
 public class Employee {
@@ -33,7 +32,7 @@ public class Employee {
 	private String employeeName;
 	
 	@Column(name="salary")
-	private String employeeSalary;
+	private Double employeeSalary;
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="address_id")
@@ -48,7 +47,7 @@ public class Employee {
 	private List<Roles> roles;
 	
 	@Column(name="mobile_number")
-	private BigInteger mobileNumber;
+	private Long mobileNumber;
 	
 	@Column(name="email_id")
 	private String emailId;
@@ -71,8 +70,8 @@ public class Employee {
 		super();
 	}
 
-	public Employee(Long id, String employeeName, String employeeSalary, Address address, Department department,
-			List<Roles> roles, BigInteger mobileNumber, String emailId, String createdBy, String updatedBy,
+	public Employee(Long id, String employeeName, Double employeeSalary, Address address, Department department,
+			List<Roles> roles, Long mobileNumber, String emailId, String createdBy, String updatedBy,
 			Date createdDate, Date updatedDate) {
 		super();
 		this.id = id;
@@ -90,7 +89,7 @@ public class Employee {
 	}
 
 	
-	public Employee(EmployeePojo employeePojo) {
+	public Employee(EmployeeRequestObj employeePojo) {
 		super();
 		this.employeeName = employeePojo.getEmployeeName();
 		this.employeeSalary = employeePojo.getEmployeeSalary();
@@ -117,11 +116,11 @@ public class Employee {
 		this.employeeName = employeeName;
 	}
 
-	public String getEmployeeSalary() {
+	public Double getEmployeeSalary() {
 		return employeeSalary;
 	}
 
-	public void setEmployeeSalary(String employeeSalary) {
+	public void setEmployeeSalary(Double employeeSalary) {
 		this.employeeSalary = employeeSalary;
 	}
 
@@ -149,11 +148,11 @@ public class Employee {
 		this.roles = roles;
 	}
 
-	public BigInteger getMobileNumber() {
+	public Long getMobileNumber() {
 		return mobileNumber;
 	}
 
-	public void setMobileNumber(BigInteger mobileNumber) {
+	public void setMobileNumber(Long mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 

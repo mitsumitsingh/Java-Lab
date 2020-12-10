@@ -1,25 +1,33 @@
 package com.sumit.knowledgeRepo.service;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import javax.servlet.http.HttpServletResponse;
 
-import com.sumit.knowledgeRepo.model.Employee;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.sumit.knowledgeRepo.pojo.EmployeePojo;
+import com.sumit.knowledgeRepo.requestObject.EmployeeRequestObj;
 
 @Service
 public interface EmployeeService {
 
-	List<Employee> getAllEmployees();
+	List<EmployeePojo> getAllEmployees();
 
-	Employee getEmployeeById(Long employeeId);
+	EmployeePojo getEmployeeById(Long employeeId);
 
-	Employee saveEmployee(EmployeePojo employee);
+	EmployeePojo saveEmployee(EmployeeRequestObj employee);
 
-	Employee updateEmployee(Long employeeId, Employee employeeDetails);
+	EmployeePojo updateEmployee(Long employeeId, EmployeeRequestObj employeeDetails);
 
-	Employee deleteEmployee(Long employeeId);
+	EmployeePojo deleteEmployee(Long employeeId);
 
-	List<Employee> getAllEmployeesByPaging(int pageNumber, int pageSize);
+	List<EmployeePojo> getAllEmployeesByPaging(int pageNumber, int pageSize);
+
+	void downloadEmployeesXlsx(HttpServletResponse response) throws IOException;
+
+	List<EmployeePojo> uploadEmployeesXlsx(MultipartFile file) throws IOException;
 
 }
