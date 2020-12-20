@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <title>1DBarcodeSample</title>
+  
+  <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js" type="text/javascript"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+	<svg id="barcode"></svg>
+</body>
+
+<script type="text/javascript">
+	
+	JsBarcode("#barcode", "1234", {
+	  lineColor: "#000000",
+	  width: 3,
+	  height: 100,
+	  displayValue: true
+	});
+
+</script>
+
+</html>
