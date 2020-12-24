@@ -1,0 +1,44 @@
+schema{
+	query: Query
+}
+
+type Query{
+	getAllEmployee : [Employee]
+	findEmployeeById(id: Long) : Employee
+}
+
+type Employee{
+	id: Int
+	employeeName: String
+	employeeSalary:String
+	address: Address
+	department: Department
+	roles:[Role]
+	mobileNumber:Long
+	emailId:String
+	createdBy:String
+	updatedBy:String
+	createdDate:String
+	updatedDate:String
+}
+
+type Address{
+	id : Int
+	address : String
+	address1 : String
+	district : String
+	city : String
+	state : String
+	country : String
+	zipCode : Int
+}
+
+type Department{
+	id : Int
+	departmentName : String
+}
+
+type Role{
+	id : Int
+	name : String
+}

@@ -17,8 +17,6 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.sumit.knowledgeRepo.service.AmazonBucketService;
 
-
-
 @Service
 public class AmazonBucketServiceImpl implements AmazonBucketService {
 	
