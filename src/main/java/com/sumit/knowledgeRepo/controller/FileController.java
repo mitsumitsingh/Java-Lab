@@ -12,8 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +28,7 @@ import com.sumit.knowledgeRepo.pojo.UploadFilePojo;
 import com.sumit.knowledgeRepo.service.FileStorageService;
 
 @RestController
+@CrossOrigin(allowedHeaders="*")
 public class FileController extends RestCtrl{
 	
 	private static final Logger log = LoggerFactory.getLogger(FileController.class);
@@ -34,19 +37,21 @@ public class FileController extends RestCtrl{
     private FileStorageService fileStorageService;
     
     @PostMapping("/uploadFile")
-    public UploadFilePojo uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<UploadFilePojo> uploadFile(@RequestParam("file") MultipartFile file) {
     	
     	UploadFilePojo uploadFilePojo = fileStorageService.uploadFile(file);
         
-        return uploadFilePojo;
+        return new ResponseEntity<>(uploadFilePojo, new HttpHeaders(), HttpStatus.OK);
     }
 
     @PostMapping("/uploadMultipleFiles")
-    public List<UploadFilePojo> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
-        return Arrays.asList(files)
+    public ResponseEntity<List<UploadFilePojo>> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
+    	List<UploadFilePojo> uploadFiles =  Arrays.asList(files)
                 .stream()
-                .map(file -> uploadFile(file))
+                .map(file -> fileStorageService.uploadFile(file))
                 .collect(Collectors.toList());
+        
+        return new ResponseEntity<>(uploadFiles, new HttpHeaders(), HttpStatus.OK);
     }
 
     @GetMapping("/downloadFile/{fileName:.+}")
