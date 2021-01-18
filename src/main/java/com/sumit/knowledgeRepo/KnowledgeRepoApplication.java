@@ -3,12 +3,14 @@ package com.sumit.knowledgeRepo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.sumit.knowledgeRepo.config.FileStorageProperties;
 
 @EnableTransactionManagement
 @SpringBootApplication
+@EnableCaching
 @EnableConfigurationProperties({
     FileStorageProperties.class
 })
